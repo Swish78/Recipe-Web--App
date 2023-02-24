@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Recipe App</title>
+  </head>
+  <body>
+    <h1>Recipe</h1>
+    {% if recipe %}
+    <h2>{{ recipe[0].title }}</h2>
+    <img src="{{ recipe[0].image }}" alt="{{ recipe[0].title }}">
+    <ul>
+      {% for ingredient in recipe[0].missedIngredients %}
+      <li>{{ ingredient.original }}</li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p>No recipe found.</p>
+    {% endif %}
+  </body>
+</html>
