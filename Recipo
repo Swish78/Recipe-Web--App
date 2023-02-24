@@ -1,0 +1,28 @@
+from flask import Flask, request, render_template
+import requests
+import json
+
+app = Flask(__name__,template_folder='Recipes')
+
+
+@app.route('/')
+def home():
+    return render_template('recipe-index.html')
+
+
+@app.route('/recipe', methods=['POST'])
+def recipe():
+    # Get the ingredients entered by the user
+    ingredients = request.form['ingredients']
+
+    # Making a request to Edamam API
+    url = f"https://api.edamam.com/search?q={ingredients}&app_id=YOUR_APP_ID&app_key=9fab07614c0e5cc3ef1abeba311b38a0	"
+    response = requests.get(url)
+    recipe = json.loads(response.text)
+
+    return render_template('html-recipe.html', recipe=recipe['hits'][0]['recipe'])  #
+    # Will give recipe to the user
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
